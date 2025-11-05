@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  maxkb-dev:
+    image: registry.fit2cloud.com/maxkb/maxkb:v1.10.10-lts
+    container_name: maxkb-dev
+    restart: unless-stopped
+    ports:
+      - "8081:8080"                       # 与线上 8080 区分
+    volumes:
+      - /home/mxq/Develop/MaxKB_src/apps:/opt/maxkb/app/apps   # 挂载源码（右侧为容器内代码目录）
+      - /home/mxq/.maxkb-dev/logs:/opt/maxkb/logs
+      - /home/mxq/.maxkb-dev/data:/opt/maxkb/data
+      - /home/mxq/Develop/kg_data/md:/opt/maxkb/data/kg/md:ro
+      - /home/mxq/opt/maxkb/model:/opt/maxkb/model          # 模型可共用
+      - maxkbdev-sandbox:/opt/maxkb/app/sandbox
+    # 不要挂 /var/lib/postgresql/data，避免与线上 PGDATA 冲突
+    environment:
+      - PYTHONPATH=/opt/maxkb/app/apps/kg/kg_lib:/opt/maxkb/app/sandbox/python-packages
+
+  neo4j:
+    image: neo4j:latest
+    container_name: neo4j
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:17474:7474"   # Web UI
+      - "127.0.0.1:17687:7687"
+    environment:
+      - NEO4J_AUTH=neo4j/neo4j_pass123
+      - NEO4JLABS_PLUGINS=["apoc"]
+    volumes:
+      - /home/mxq/.neo4j-dev/data:/data
+      - /home/mxq/.neo4j-dev/logs:/logs
+
+volumes:
+  maxkbdev-sandbox:

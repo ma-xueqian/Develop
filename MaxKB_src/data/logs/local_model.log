@@ -1,0 +1,10 @@
+[2025-10-21 16:57:00 +0800] [214] [INFO] Starting gunicorn 23.0.0
+[2025-10-21 16:57:00 +0800] [214] [INFO] Listening at: http://127.0.0.1:11636 (214)
+[2025-10-21 16:57:00 +0800] [214] [INFO] Using worker: gthread
+[2025-10-21 16:57:00 +0800] [216] [INFO] Booting worker with pid: 216
+/opt/py3/lib/python3.11/site-packages/drf_yasg/__init__.py:2: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import DistributionNotFound, get_distribution
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.806 seconds.
+Prefix dict has been built successfully.

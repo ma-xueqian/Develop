@@ -1,0 +1,46 @@
+relationships:
+- name: CODE_MEANING
+  patterns:
+  - 的含义
+  - 含义是
+  must_have:
+  - re:[A-Za-z]
+- name: ALIAS
+  patterns:
+  - 也称
+- name: INCLUDES
+  patterns:
+  - 组成
+  - 包括
+  - 由
+- name: USES
+  patterns:
+  - 用来
+  - 使用
+  - 采用
+- name: HAS_LEVEL
+  patterns:
+  - 等级
+  must_have:
+  - 等级
+- name: RETENTION_LONG
+  patterns:
+  - 长期保存期
+  - 长期保存
+  must_have:
+  - 天
+- name: AVG_LENGTH
+  patterns:
+  - 平均长度
+  must_have:
+  - 字符
+- name: SPLIT_THRESHOLD
+  patterns:
+  - 超过
+  - 会被拆分
+  - 拆分为
+  must_have:
+  - 字符
+- name: BELONGS_TO
+  patterns:
+  - 属于

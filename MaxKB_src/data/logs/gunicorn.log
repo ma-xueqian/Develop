@@ -1,0 +1,49 @@
+[2025-10-21 16:57:00 +0800] [213] [INFO] Starting gunicorn 23.0.0
+[2025-10-21 16:57:00 +0800] [213] [INFO] Listening at: http://0.0.0.0:8080 (213)
+[2025-10-21 16:57:00 +0800] [213] [INFO] Using worker: gthread
+[2025-10-21 16:57:00 +0800] [217] [INFO] Booting worker with pid: 217
+[2025-10-21 16:57:01 +0800] [218] [INFO] Booting worker with pid: 218
+[2025-10-21 16:57:01 +0800] [219] [INFO] Booting worker with pid: 219
+/opt/py3/lib/python3.11/site-packages/drf_yasg/__init__.py:2: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import DistributionNotFound, get_distribution
+/opt/py3/lib/python3.11/site-packages/drf_yasg/__init__.py:2: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import DistributionNotFound, get_distribution
+/opt/py3/lib/python3.11/site-packages/drf_yasg/__init__.py:2: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import DistributionNotFound, get_distribution
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.774 seconds.
+Prefix dict has been built successfully.
+Loading model cost 0.782 seconds.
+Prefix dict has been built successfully.
+Loading model cost 0.809 seconds.
+Prefix dict has been built successfully.
+172.21.0.1 [21/Oct/2025:16:57:14 +0800] 3.899842s "GET / HTTP/1.1" 200 354
+172.21.0.1 [21/Oct/2025:16:57:14 +0800] 0.017061s "GET /ui/assets/index-6d3725fc.css HTTP/1.1" 200 76942
+172.21.0.1 [21/Oct/2025:16:57:14 +0800] 0.278058s "GET /ui/assets/index-5edadd4e.js HTTP/1.1" 200 2098311
+2025-10-21 16:57:14 [log WARNING] Unauthorized: /api/user
+172.21.0.1 [21/Oct/2025:16:57:14 +0800] 0.005481s "GET /api/user HTTP/1.1" 401 67
+172.21.0.1 [21/Oct/2025:16:57:14 +0800] 0.003568s "GET /ui/assets/index-a5756ddc.css HTTP/1.1" 200 321
+172.21.0.1 [21/Oct/2025:16:57:14 +0800] 0.005341s "GET /ui/assets/auth-setting-e9d11ceb.js HTTP/1.1" 200 222
+172.21.0.1 [21/Oct/2025:16:57:14 +0800] 0.018723s "GET /ui/assets/index-3bd5879f.js HTTP/1.1" 200 32789
+172.21.0.1 [21/Oct/2025:16:57:14 +0800] 0.001150s "GET /api/profile HTTP/1.1" 200 174
+172.21.0.1 [21/Oct/2025:16:57:14 +0800] 0.137541s "GET /api/user/captcha HTTP/1.1" 200 11370
+172.21.0.1 [21/Oct/2025:16:57:14 +0800] 0.001726s "GET /ui/assets/MaxKB-logo-3d0615e0.svg HTTP/1.1" 200 2730
+172.21.0.1 [21/Oct/2025:16:57:15 +0800] 0.177642s "GET /ui/assets/default-0e36dbc5.jpg HTTP/1.1" 200 786586
+172.21.0.1 [21/Oct/2025:16:57:15 +0800] 0.446128s "GET /ui/assets/AlibabaPuHuiTi-3-55-Regular-cfa03ca1.woff HTTP/1.1" 200 5536470
+172.21.0.1 [21/Oct/2025:16:57:29 +0800] 0.036465s "POST /api/user/login HTTP/1.1" 200 222
+172.21.0.1 [21/Oct/2025:16:57:29 +0800] 0.010697s "GET /api/user HTTP/1.1" 200 500
+172.21.0.1 [21/Oct/2025:16:57:29 +0800] 0.001609s "GET /api/profile HTTP/1.1" 200 174
+172.21.0.1 [21/Oct/2025:16:57:29 +0800] 0.002278s "GET /ui/assets/AppLayout-ba9ba31e.js HTTP/1.1" 200 269
+172.21.0.1 [21/Oct/2025:16:57:29 +0800] 0.001986s "GET /ui/assets/AppLayout-d28c6df1.css HTTP/1.1" 200 294
+172.21.0.1 [21/Oct/2025:16:57:29 +0800] 0.001970s "GET /ui/assets/index-5075c788.css HTTP/1.1" 200 427
+172.21.0.1 [21/Oct/2025:16:57:29 +0800] 0.002803s "GET /ui/assets/index-b3423ecd.js HTTP/1.1" 200 4370
+172.21.0.1 [21/Oct/2025:16:57:29 +0800] 0.002264s "GET /ui/assets/user-icon-c413d294.svg HTTP/1.1" 200 462
+172.21.0.1 [21/Oct/2025:16:57:29 +0800] 0.020045s "GET /api/user/list/APPLICATION HTTP/1.1" 200 169
+/opt/py3/lib/python3.11/site-packages/django/db/models/base.py:366: RuntimeWarning: Model 'dataset.dynamics' was already registered. Reloading models is not advised as it can lead to inconsistencies, most notably with related models.
+  new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+172.21.0.1 [21/Oct/2025:16:57:29 +0800] 0.046510s "GET /api/application/1/30 HTTP/1.1" 200 103

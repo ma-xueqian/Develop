@@ -1,0 +1,1 @@
+import{dX as i,dY as s,dZ as r}from"./index-5edadd4e.js";const n="/auth",u=(t,o)=>i(`${n}/${t}/detail`,void 0,o),a=(t,o)=>s(`${n}/connection`,t,void 0,o),p=(t,o,e)=>r(`${n}/${t}/info`,o,void 0,e),d={getAuthSetting:u,postAuthSetting:a,putAuthSetting:p};export{d as a};
