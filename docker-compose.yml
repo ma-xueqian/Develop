@@ -16,6 +16,7 @@ services:
     # 不要挂 /var/lib/postgresql/data，避免与线上 PGDATA 冲突
     environment:
       - PYTHONPATH=/opt/maxkb/app/apps/kg/kg_lib:/opt/maxkb/app/sandbox/python-packages
+      - HF_HUB_DISABLE_TORCH_LOAD_CVE_WARNING=1
 
   neo4j:
     image: neo4j:latest
