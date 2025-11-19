@@ -13,6 +13,31 @@ import os, re, glob, json, time
 from typing import List, Dict
 from neo4j import GraphDatabase
 from openai import OpenAI
+from tqdm import tqdm
+
+# 标志行正则：支持行首 '——'/'—'/'-'/'•'/'·'/'一' 前缀；中文/英文括号；全角/半角冒号
+FLAG_LINE = re.compile(
+    r'^\s*(?:[—\-•·一]*\s*)?(?P<flag>[A-Z][A-Z0-9]{1,15})'
+    r'(?:[（(](?P<alias>[^）)]{0,50})[）)])?\s*[:：]\s*(?P<body>.+?)\s*[；;。]?\s*$'
+)
+
+def extract_flag_lines(text: str) -> List[Dict]:
+    rows=[]
+    for raw in text.splitlines():
+        line = raw.strip()
+        m = FLAG_LINE.match(line)
+        if not m: 
+            continue
+        flag  = (m.group("flag") or "").strip()
+        alias = (m.group("alias") or "").strip(" 、，, ")
+        body  = (m.group("body")  or "").strip()
+        if not flag or not body:
+            continue
+        s = f"{flag} 标志"
+        rows.append({"s": s, "p_raw": "用途", "o": body, "snippet": line})
+        if alias:
+            rows.append({"s": s, "p_raw": "别名", "o": alias, "snippet": line})
+    return rows
 
 SECTION_ONLY = re.compile(r'^\s*(\d+(?:\.\d+){1,6}|[一二三四五六七八九十]+|[A-Za-z])([.)、）])?\s*$')
 def clean(s:str)->str:
@@ -84,6 +109,13 @@ FEWSHOT = r"""
 - 供电 —电压→ 220V±20V
 - 供电 —频率→ 50Hz
 - 环境 —海拔上限→ 5000m
+
+示例7（标志行）：
+文本：
+“——COL（校对、核对）：在新的电报中对原来重要的电报进行校对时，在校对副本之前应使用COL标志；”
+期望：
+- COL 标志 —用途→ 在新的电报中对原来重要的电报进行校对时，在校对副本之前应使用COL标志
+- COL 标志 —别名→ 校对、核对
 """
 
 def call_llm(text: str, client: OpenAI, model: str) -> List[Dict]:
@@ -144,16 +176,37 @@ def run(pattern: str, uri: str, user: str, pwd: str, base: str, key: str, model:
     for fp in files:
         with open(fp, "r", encoding="utf-8", errors="ignore") as f:
             txt = f.read()
+
+        # 先跑规则兜底（解决 COL/COR/PDM 这类行）
+        rule_rows = extract_flag_lines(txt)
         all_rows, seen = [], set()
-        for ck in chunk(txt):
-            triples = call_llm(ck, client, model)
-            for t in triples:
-                sig=(t["s"], t["p_raw"], t["o"])
-                if sig in seen: continue
-                seen.add(sig)
-                all_rows.append(t)
+        for t in rule_rows:
+            sig = (t["s"], t["p_raw"], t["o"])
+            if sig in seen: 
+                continue
+            seen.add(sig); all_rows.append(t)
+
+        # 再跑 LLM（补充其它关系）
+        chunks = chunk(txt)
+        t_file0 = time.time()
+        with tqdm(total=len(chunks), desc=f"Extract {os.path.basename(fp)}", unit="chunk") as bar:
+            avg, n = 0.0, 0
+            for ck in chunks:
+                t0 = time.time()
+                triples = call_llm(ck, client, model)
+                dt = time.time() - t0
+                n += 1; avg = (avg*(n-1)+dt)/n
+                bar.set_postfix(last_s=f"{dt:.2f}", avg_s=f"{avg:.2f}", triples=len(triples))
+                bar.update(1)
+                for t in triples:
+                    sig = (t["s"], t["p_raw"], t["o"])
+                    if sig in seen: 
+                        continue
+                    seen.add(sig); all_rows.append(t)
+
         push(all_rows, uri, user, pwd, fp)
-        print(os.path.basename(fp), "->", len(all_rows), "triples")
+        print(f"{os.path.basename(fp)} -> {len(all_rows)} triples | {len(chunks)} chunks | {time.time()-t_file0:.1f}s")
+
 
 if __name__ == "__main__":
     import argparse
